@@ -1,7 +1,7 @@
 
 
 import os, sys
-from websocket.audio_websocket_server import WebsocketServer
+from websocket_own.audio_websocket_server import WebsocketServer
 import numpy as np
 import wave
 
@@ -27,6 +27,8 @@ def message_received(client, server, message):
     except:
         message_decoded = np.frombuffer(message, np.int16)
         client['of'].writeframes(b''.join(message_decoded))
+        client['handler'].send_message(f'Received data:  {len(message_decoded)} ')
+
 
 PORT=9001
 server = WebsocketServer(port = PORT)
