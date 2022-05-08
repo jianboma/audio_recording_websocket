@@ -13,7 +13,7 @@ import errno
 import threading
 from socketserver import ThreadingMixIn, TCPServer, StreamRequestHandler
 
-from websocket_own.thread import WebsocketServerThread
+from websocket.thread import WebsocketServerThread
 
 logger = logging.getLogger(__name__)
 logging.basicConfig()

@@ -14,7 +14,7 @@ import errno
 import threading
 from socketserver import ThreadingMixIn, TCPServer, StreamRequestHandler
 
-from websocket_own.thread import WebsocketServerThread
+from websocket.thread import WebsocketServerThread
 
 import numpy as np
 import wave
@@ -190,7 +190,7 @@ class WebsocketServer(ThreadingMixIn, TCPServer, API):
         }
         client['of'].setnchannels(1)
         client['of'].setsampwidth(2)
-        client['of'].setframerate(48000)
+        client['of'].setframerate(16000)
         self.clients.append(client)
         self.new_client(client, self)
 
@@ -332,8 +332,7 @@ class WebSocketHandler(StreamRequestHandler):
             logger.warning("Continuation frames are not supported.")
             return
         elif opcode == OPCODE_BINARY:
-            logger.warning("Binary frames are not supported.")
-            return
+            opcode_handler = self.server._message_received_
         elif opcode == OPCODE_TEXT:
             opcode_handler = self.server._message_received_
         elif opcode == OPCODE_PING:
